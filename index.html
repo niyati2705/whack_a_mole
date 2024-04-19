@@ -8,8 +8,19 @@
     <script src="mole.js"></script>
 </head>
 <body>
+    <div id="start-dialog">
+        <button id="start-game-btn">Start Game!</button>
+      </div>
+      <div id="game-over-dialog" style="display: none;">
+        <p id="game-over-message"></p>
+        <button id="play-again-btn">Play Again</button>
+    </div>
     <h1>Whack A Mole</h1>
-    <h2 id="score">0</h2>
+    <h2 id="score">Points: 0</h2>
+    
+    <div id="timer-cont">
+        <div id="timer"></div>
+    </div>
     <!-- 3x3 board -->
     <div id="board"></div>
     <div class="board-min-width" style="position: fixed; top: 0; left: 0; z-index: -1;"></div>

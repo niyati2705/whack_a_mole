@@ -3,12 +3,49 @@ let currMoleTile;
 let currPlantTile;
 let score = 0;
 let gameOver = false;
+let timerInterval;
 
-window.onload= function(){
+window.onload = function () {
+    document.getElementById("start-dialog").style.display = "block";
+    document.getElementById("start-game-btn").addEventListener("click", function () {
+        setGame();
+        document.getElementById("start-dialog").style.display = "none";
+    });
+
+    document.getElementById("play-again-btn").addEventListener("click", function () {
+        resetGame();
+    });
+}
+
+function resetGame() {
+    clearInterval(timerInterval);
+    score = 0;
+    gameOver = false;
+    document.getElementById("score").innerText = "Points: 0";
+    document.getElementById("game-over-dialog").style.display = "none";
     setGame();
 }
 
+
 function setGame(){
+    let timer = document.getElementById('timer');
+    let timeLeft = 60;
+
+    timerInterval = setInterval(() => {
+    timeLeft--;
+    timer.textContent = timeLeft;
+
+    // if (timeLeft <= 10) {
+    //     timer.classList.add('bounce');
+    // }
+
+    if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        // Stop the game here
+        gameOver=true;
+        // document.getElementById("score").innerText= "GAME OVER: " + score.toString();
+    }
+}, 1000);
     //set grid for game board
     //9 tiles; 
     for(let i=0;i<9;i++){ // i 0-8, stops at 9
@@ -85,13 +122,17 @@ function selectTile(){
         return;
     }
     //this; clicked tile
-    if(this== currMoleTile){
+    if(this=== currMoleTile){
         score +=10;
-        document.getElementById("score").innerText= score.toString(); //update score
+        document.getElementById("score").innerText= "Points:" + score.toString(); //update score
     }
-    else if(this== currPlantTile){
-        document.getElementById("score").innerText= "GAME OVER: " + score.toString();
+    else if(this=== currPlantTile){
+        clearInterval(timerInterval);
+        // document.getElementById("score").innerText= "GAME OVER: " + score.toString();
         gameOver=true;
+        document.getElementById("game-over-dialog").style.display = "block"; // Display game over dialog
+        document.getElementById("game-over-message").innerText = "Game Over! YOR SCORE: " + score.toString();
     }
+    
 }
 
